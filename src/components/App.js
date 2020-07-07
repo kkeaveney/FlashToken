@@ -1,0 +1,64 @@
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import NavBarList from '../containers/NavBarList'
+import Content from './Content'
+
+import './App.css'
+
+import {
+  loadWeb3,
+  loadAccount,
+  loadAccountBalance,
+  loadToken,
+  loadTokenName,
+  loadProvider,
+  loadAccountTokenBalance,
+  loadAllTransactions,
+  subscribeToEvents,
+} from '../interactions'
+
+class App extends Component {
+  componentWillMount() {
+    this.loadBlockchainData(this.props.dispatch)
+  }
+
+  async loadBlockchainData(dispatch) {
+    const web3 = loadWeb3(dispatch)
+    const account = await loadAccount(dispatch)
+    await loadAccountBalance(web3, dispatch)
+    await loadProvider(web3, dispatch)
+
+    const networkId = await web3.eth.net.getId()
+
+    const token = await loadToken(web3, networkId, dispatch)
+    if (!token) {
+      window.alert('Token smart contract not detected on the current network')
+      return
+    }
+
+    await loadTokenName(token, dispatch)
+    await loadAccountTokenBalance(account, token, dispatch)
+    await loadAllTransactions(token, dispatch)
+
+    window.ethereum.on('accountsChanged', async function (accounts) {
+      await loadAccount(dispatch)
+      await loadAccountBalance(web3, dispatch)
+      await loadAccountTokenBalance(accounts[0], token, dispatch)
+    })
+
+    setTimeout(async function () {
+      await subscribeToEvents(token, dispatch)
+    }, 2000)
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBarList />
+        <Content />
+      </div>
+    )
+  }
+}
+
+export default connect()(App)
