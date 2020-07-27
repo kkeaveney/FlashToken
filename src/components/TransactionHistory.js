@@ -6,10 +6,15 @@ export const showTransactions = (transactions) => {
   return (
     <tbody>
       {transactions.map((transaction) => {
+        const sender = transaction.sender
+        const senderReduced = sender.substr(0, 24) + '...'
+        const recipent = transaction.recipent
+        const recipentReduced = recipent.substr(0, 24) + '...'
         return (
           <tr className={`order-${transaction.id}`} key={transaction.id}>
             <td className="text-muted">{transaction.id}</td>
-            <td>{transaction.sender}</td>
+            <td>{senderReduced}</td>
+            <td>{recipentReduced}</td>
             <td className={`text-${transaction.id}`}>{transaction.amount}</td>
           </tr>
         )
@@ -29,8 +34,9 @@ class TransactionHistory extends Component {
               <thead>
                 <tr>
                   <th></th>
-                  {/* <th>DAPP</th>
-                  <th>DAPP/ETH</th> */}
+                  <th>From</th>
+                  <th>To</th>
+                  <th>FLX</th>
                 </tr>
               </thead>
               {showTransactions(this.props.transactions)}
