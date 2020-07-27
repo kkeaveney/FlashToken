@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { transferTokens } from '../interactions'
 
-const handleSubmit = async (token, dispatch) => {
+const handleSubmit = async (token) => {
   await transferTokens(
     token,
-    '0x59AF190f808697938B99a23cb537A266b7F0b6aE',
-    '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
+    '0xe3856c3b177f3dEC7Bd06c4B864A7d3b2F2bb8F4',
+    '0xA328e27b22d27a9Afdbc2A330a736382dB721656',
     '1',
   )
 }

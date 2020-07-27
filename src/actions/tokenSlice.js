@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createSelector } from 'reselect'
 import { get } from 'lodash'
 
+let lastId = 0
+
 export const tokenSlice = createSlice({
   name: 'FlxToken',
   initialState: {
@@ -46,3 +48,6 @@ export const tokenNameSelector = createSelector(tokenName, (n) => n)
 
 const tokenbalance = (state) => get(state, 'token.balance')
 export const tokenBalanceSelector = createSelector(tokenbalance, (t) => t)
+
+const transactions = (state) => get(state, 'token.transactions')
+export const transactionsSelector = createSelector(transactions, (t) => t)

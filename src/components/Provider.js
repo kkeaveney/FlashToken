@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Provider = ({ provider, currentProvider }) => {
+const Provider = ({ provider }) => {
   let network = { provider }.provider
   if (network === '1') {
     network = 'Main Ethereum Network'

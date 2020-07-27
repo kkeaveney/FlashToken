@@ -1,6 +1,6 @@
 import { tokens, EVM_REVERT } from './helpers'
 
-const Token = artifacts.require('./FlxToken')
+const Token = artifacts.require('./Token')
 
 require('chai').use(require('chai-as-promised')).should()
 
@@ -42,7 +42,9 @@ contract('Token', ([deployer, receiver]) => {
     describe('success', async () => {
       beforeEach(async () => {
         amount = tokens(100)
-        result = await token.transfer(receiver, amount, { from: deployer })
+        result = await token.makeTransaction(receiver, amount, {
+          from: deployer,
+        })
       })
 
       it('transfers token balances', async () => {
@@ -54,12 +56,12 @@ contract('Token', ([deployer, receiver]) => {
       })
       it('emits a Transfer event', async () => {
         const log = result.logs[0]
-        log.event.should.eq('Transfer')
+        log.event.should.equal('Transfer')
         const event = log.args
         console.log(event)
-        event.from.toString().should.equal(deployer, 'from is correct')
-        event.to.should.equal(receiver, 'to is correct')
-        event.value
+        event.sender.toString().should.equal(deployer, 'fromx is correct')
+        event.recipent.toString().should.equal(receiver, 'to is correct')
+        event.amount
           .toString()
           .should.equal(amount.toString(), 'value is correct')
       })

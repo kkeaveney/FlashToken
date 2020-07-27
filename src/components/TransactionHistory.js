@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 
-export const showAccounts = (accounts) => {
+export const showTransactions = (transactions) => {
   return (
     <tbody>
-      {accounts.map((account) => {
+      {transactions.map((transaction) => {
         return (
-          <tr key={account}>
-            <td className="text-muted">{account}</td>
+          <tr className={`order-${transaction.id}`} key={transaction.id}>
+            <td className="text-muted">{transaction.id}</td>
+            <td>{transaction.sender}</td>
+            <td className={`text-${transaction.id}`}>{transaction.amount}</td>
           </tr>
         )
       })}
@@ -16,7 +18,7 @@ export const showAccounts = (accounts) => {
   )
 }
 
-class TransactionBlock extends Component {
+class TransactionHistory extends Component {
   render() {
     return (
       <div className="vertical">
@@ -31,7 +33,7 @@ class TransactionBlock extends Component {
                   <th>DAPP/ETH</th> */}
                 </tr>
               </thead>
-              {showAccounts(this.props.walletAccounts)}
+              {showTransactions(this.props.transactions)}
             </table>
           </div>
         </div>
@@ -40,14 +42,12 @@ class TransactionBlock extends Component {
   }
 }
 
-TransactionBlock.defaultProps = {
+TransactionHistory.defaultProps = {
   web3: {},
-  walletAccounts: [],
 }
 
-TransactionBlock.propTypes = {
+TransactionHistory.propTypes = {
   web3: PropTypes.object.isRequired,
-  walletAccounts: PropTypes.array.isRequired,
 }
 
-export default TransactionBlock
+export default TransactionHistory

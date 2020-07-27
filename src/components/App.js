@@ -47,7 +47,7 @@ class App extends Component {
     })
 
     setTimeout(async function () {
-      await subscribeToEvents(token, dispatch)
+      await subscribeToEvents(token, dispatch, web3, account)
     }, 2000)
   }
 

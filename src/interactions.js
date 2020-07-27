@@ -82,7 +82,7 @@ export const transferTokens = async (
 ) => {
   try {
     await token.methods
-      .transfer(receiverAddress, value)
+      .makeTransaction(receiverAddress, value)
       .send({ from: senderAddress })
   } catch (err) {
     console.log(err)
@@ -96,13 +96,13 @@ export const loadAllTransactions = async (token, dispatch) => {
   })
 
   const transactions = transactionStream.map((event) => event.returnValues)
-  console.log('transactionStream', transactions)
   dispatch(transactionsLoaded(transactions))
 }
 
-export const subscribeToEvents = async (token, dispatch) => {
-  // console.log('subs')
+export const subscribeToEvents = async (token, dispatch, web3, address) => {
   token.events.Transfer({}, (error, event) => {
     dispatch(transactionComplete(event.returnValues))
+    loadAccountTokenBalance(address, token, dispatch)
+    loadAccountBalance(web3, dispatch)
   })
 }
