@@ -2,17 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { transferTokens } from '../interactions'
 import { tokenAmountChanged } from '../actions/tokenSlice'
+import { recipientAccountLoaded } from '../actions/accountSlice'
 
-const handleSubmit = async (account, token, tokenAmount) => {
-  await transferTokens(
-    token,
-    account,
-    '0xA328e27b22d27a9Afdbc2A330a736382dB721656',
-    tokenAmount,
-  )
+const handleSubmit = async (account, token, tokenAmount, recipient) => {
+  await transferTokens(token, account, recipient, tokenAmount)
 }
 
-const NewTransaction = ({ account, token, dispatch, tokenAmount }) => {
+const NewTransaction = ({
+  account,
+  token,
+  dispatch,
+  tokenAmount,
+  recipient,
+}) => {
   return (
     <div className="vertical">
       <div className="card bg-dark text-white">
@@ -30,30 +32,34 @@ const NewTransaction = ({ account, token, dispatch, tokenAmount }) => {
               </tr>
             </tbody>
           </table>
-          <table className="table table-dark table-sm small">
-            <thead>
-              <tr>
-                <th>Recipient</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="form ">
-                <td>0xA328e27b22d27a9Afdbc2A330a736382dB721656</td>
-              </tr>
-            </tbody>
-          </table>
+          <form
+            className="row"
+            // onSubmit={(event) => {
+            //   event.preventDefault()
+            //   // handleSubmit(account, token, tokenAmount)
+            // }}
+          >
+            <div className="col-0 col-sm m-1">
+              <input
+                type="text"
+                placeholder="Recipient address"
+                onChange={(e) =>
+                  dispatch(recipientAccountLoaded(e.target.value))
+                }
+                className="form-control form-control-sm bg-dark text-white"
+                required
+              />
+            </div>
+          </form>
 
-          <table className="table table-dark table-sm small">
-            <tbody></tbody>
-          </table>
           <form
             className="row"
             onSubmit={(event) => {
               event.preventDefault()
-              handleSubmit(account, token, tokenAmount)
+              handleSubmit(account, token, tokenAmount, recipient)
             }}
           >
-            <div className="col-0 col-sm">
+            <div className="col-0 col-sm m-1">
               <input
                 type="text"
                 placeholder="FLX Amount"
