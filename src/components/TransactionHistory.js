@@ -5,20 +5,23 @@ import { Component } from 'react'
 export const showTransactions = (transactions) => {
   return (
     <tbody>
-      {transactions.map((transaction) => {
-        const sender = transaction.sender
-        const senderReduced = sender.substr(0, 24) + '...'
-        const recipent = transaction.recipent
-        const recipentReduced = recipent.substr(0, 24) + '...'
-        return (
-          <tr className={`order-${transaction.id}`} key={transaction.id}>
-            <td className="text-muted">{transaction.id}</td>
-            <td>{senderReduced}</td>
-            <td>{recipentReduced}</td>
-            <td className={`text-${transaction.id}`}>{transaction.amount}</td>
-          </tr>
-        )
-      })}
+      {transactions
+        .slice()
+        .reverse()
+        .map((transaction) => {
+          const sender = transaction.sender
+          const senderReduced = sender.substr(0, 24) + '...'
+          const recipent = transaction.recipent
+          const recipentReduced = recipent.substr(0, 24) + '...'
+          return (
+            <tr className={`order-${transaction.id}`} key={transaction.id}>
+              <td className="text-muted">{transaction.id}</td>
+              <td>{senderReduced}</td>
+              <td>{recipentReduced}</td>
+              <td className={`text-${transaction.id}`}>{transaction.amount}</td>
+            </tr>
+          )
+        })}
     </tbody>
   )
 }

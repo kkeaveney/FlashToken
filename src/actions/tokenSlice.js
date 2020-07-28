@@ -8,6 +8,7 @@ export const tokenSlice = createSlice({
     tokenLoaded: false,
     transactionsLoaded: false,
     transactions: [],
+    tokenAmount: '',
   },
   reducers: {
     tokenLoaded: (state, action) => {
@@ -24,14 +25,17 @@ export const tokenSlice = createSlice({
     transactionComplete: (state, action) => {
       state.transactions.push(action.payload)
     },
+    tokenAmountChanged: (state, action) => {
+      state.tokenAmount = action.payload
+    },
   },
 })
 export const {
   tokenLoaded,
   tokenNameLoaded,
-  accountTokenBalanceLoaded,
   transactionsLoaded,
   transactionComplete,
+  tokenAmountChanged,
 } = tokenSlice.actions
 
 export default tokenSlice.reducer
@@ -49,3 +53,6 @@ export const tokenBalanceSelector = createSelector(tokenbalance, (t) => t)
 
 const transactions = (state) => get(state, 'token.transactions')
 export const transactionsSelector = createSelector(transactions, (t) => t)
+
+const tokenAmount = (state) => get(state, 'token.tokenAmount')
+export const tokenAmountSelector = createSelector(tokenAmount, (t) => t)
