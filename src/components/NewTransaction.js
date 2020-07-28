@@ -68,7 +68,7 @@ const NewTransaction = ({
                 required
               />
             </div>
-            <div className="col-12 col-sm-auto pl-sm-0">
+            <div className="col-12 col-sm-auto pl-sm-0 m-1">
               <button
                 type="submit"
                 className="btn btn-secondary btn-block btn-sm"

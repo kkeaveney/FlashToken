@@ -1,6 +1,6 @@
 import React from 'react'
 import AccountList from '../containers/AccountList'
-import ProviderList from '../containers/ProviderList'
+import Performers from '../containers/PerformersList'
 import NewTransaction from '../containers/NewTransactionList'
 import TransactionHistory from '../containers/TransactionHistoryList'
 
@@ -9,7 +9,7 @@ const Content = () => {
     <div className="content">
       <div className="vertical-split">
         <AccountList />
-        <ProviderList />
+        <Performers />
       </div>
       <TransactionHistory />
       <div className="vertical-split"></div>
