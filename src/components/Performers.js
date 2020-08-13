@@ -24,17 +24,17 @@ const Performers = ({ transactions }) => {
               </tr>
             </thead>
             <tbody>
-              {performers.map((performers) => {
-                const account = performers.recipent;
+              {performers.map((performer) => {
+                const account = performer.recipent;
                 const accountReduced = account.substr(0, 12) + "...";
 
                 return (
                   <tr
-                    className={`order-${performers.recipent}`}
-                    key={performers.recipent}
+                    className={`order-${performer.recipent}`}
+                    key={performer.recipent}
                   >
                     <td className="text-muted">{accountReduced}</td>
-                    <td>{performers.amount}</td>
+                    <td>{performer.amount}</td>
                   </tr>
                 );
               })}

@@ -4,8 +4,6 @@ import {
   web3Loaded,
   web3AccountLoaded,
   balanceLoaded,
-  providerLoaded,
-  currentProviderLoaded,
 } from "./actions/web3Slice";
 import {
   tokenLoaded,
@@ -22,12 +20,12 @@ export const loadWeb3 = (dispatch) => {
   const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
   web3.givenProvider.setMaxListeners(300);
   dispatch(web3Loaded(web3));
-  dispatch(currentProviderLoaded(web3._currentProvider.host));
   return web3;
 };
 
-export const loadAccount = async (dispatch) => {
-  let account = await getAccount();
+export const loadAccount = async (web3, dispatch) => {
+  const accounts = await web3.eth.getAccounts();
+  const account = accounts[0];
   dispatch(web3AccountLoaded(account));
   return account;
 };
@@ -38,11 +36,6 @@ export const loadAccountBalance = async (web3, dispatch) => {
   const balance = web3.utils.fromWei(balanceAsWei, "ether");
   dispatch(balanceLoaded(balance));
   return balance;
-};
-
-export const loadProvider = async (web3, dispatch) => {
-  const provider = web3._currentProvider.connection.networkVersion;
-  dispatch(providerLoaded(provider));
 };
 
 ////// Token Interactions ///////
@@ -100,9 +93,16 @@ export const loadAllTransactions = async (token, dispatch) => {
 };
 
 export const subscribeToEvents = async (token, dispatch, web3, address) => {
-  token.events.Transfer({}, (error, event) => {
-    dispatch(transactionComplete(event.returnValues));
-    loadAccountTokenBalance(address, token, dispatch);
-    loadAccountBalance(web3, dispatch);
-  });
+  console.log("event");
+  if (token) {
+    token.events.Transfer({}, (error, event) => {
+      if (error) {
+        console.log(error);
+      } else {
+        dispatch(transactionComplete(event.returnValues));
+        loadAccountTokenBalance(address, token, dispatch);
+        loadAccountBalance(web3, dispatch);
+      }
+    });
+  }
 };

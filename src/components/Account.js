@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
 const Account = ({ balance, tokenName, accountTokenBalance }) => {
   return (
@@ -38,19 +38,19 @@ const Account = ({ balance, tokenName, accountTokenBalance }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 Account.defaultProps = {
-  balance: '',
-  tokenName: '',
-  accountTokenBalance: '',
-}
+  balance: "",
+  tokenName: "",
+  accountTokenBalance: "",
+};
 
 Account.propTypes = {
   balance: PropTypes.string,
   tokenName: PropTypes.string,
   accountTokenBalance: PropTypes.string,
-}
+};
 
-export default Account
+export default Account;

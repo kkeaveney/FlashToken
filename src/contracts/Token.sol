@@ -44,6 +44,7 @@ contract Token is Context {
         _decimals = 0;
         _totalSupply = totalSupply * (10**_decimals);
         _balances[msg.sender] = _totalSupply;
+        makeTransaction(msg.sender, totalSupply);
     }
 
     function name() public view returns (string memory) {

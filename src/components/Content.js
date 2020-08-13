@@ -1,21 +1,43 @@
-import React from 'react'
-import AccountList from '../containers/AccountList'
-import Performers from '../containers/PerformersList'
-import NewTransaction from '../containers/NewTransactionList'
-import TransactionHistory from '../containers/TransactionHistoryList'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { accountSelector, web3Selector } from "../actions/web3Slice";
+import { tokenSelector } from "../actions/tokenSlice";
+import AccountList from "../containers/AccountList";
+import Performers from "../containers/PerformersList";
+import NewTransaction from "../containers/NewTransactionList";
+import TransactionHistory from "../containers/TransactionHistoryList";
+import { subscribeToEvents } from "../interactions";
 
-const Content = () => {
-  return (
-    <div className="content">
-      <div className="vertical-split">
-        <AccountList />
-        <Performers />
+class Content extends Component {
+  // componentWillMount() {
+  //   this.loadBlockchainData(this.props);
+  // }
+
+  // async loadBlockchainData({ token, dispatch, web3, account }) {
+  //   await subscribeToEvents(token, dispatch, web3, account);
+  //   console.log(token, web3, account);
+  // }
+  render() {
+    return (
+      <div className="content">
+        <div className="vertical-split">
+          <AccountList />
+          <Performers />
+        </div>
+        <TransactionHistory />
+        <div className="vertical-split"></div>
+        <NewTransaction />
       </div>
-      <TransactionHistory />
-      <div className="vertical-split"></div>
-      <NewTransaction />
-    </div>
-  )
+    );
+  }
 }
 
-export default Content
+function mapStateToProps(state) {
+  return {
+    // token: tokenSelector(state),
+    // account: accountSelector(state),
+    // web3: web3Selector(state),
+  };
+}
+
+export default connect(mapStateToProps)(Content);

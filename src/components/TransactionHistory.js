@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Component } from 'react'
+import React from "react";
+import PropTypes from "prop-types";
+import { Component } from "react";
 
 export const showTransactions = (transactions) => {
   return (
@@ -9,10 +9,10 @@ export const showTransactions = (transactions) => {
         .slice()
         .reverse()
         .map((transaction) => {
-          const sender = transaction.sender
-          const senderReduced = sender.substr(0, 24) + '...'
-          const recipent = transaction.recipent
-          const recipentReduced = recipent.substr(0, 24) + '...'
+          const sender = transaction.sender;
+          const senderReduced = sender.substr(0, 24) + "...";
+          const recipent = transaction.recipent;
+          const recipentReduced = recipent.substr(0, 24) + "...";
           return (
             <tr className={`order-${transaction.id}`} key={transaction.id}>
               <td className="text-muted">{transaction.id}</td>
@@ -20,11 +20,11 @@ export const showTransactions = (transactions) => {
               <td>{recipentReduced}</td>
               <td className={`text-${transaction.id}`}>{transaction.amount}</td>
             </tr>
-          )
+          );
         })}
     </tbody>
-  )
-}
+  );
+};
 
 class TransactionHistory extends Component {
   render() {
@@ -47,16 +47,12 @@ class TransactionHistory extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-TransactionHistory.defaultProps = {
-  web3: {},
-}
+TransactionHistory.defaultProps = {};
 
-TransactionHistory.propTypes = {
-  web3: PropTypes.object.isRequired,
-}
+TransactionHistory.propTypes = {};
 
-export default TransactionHistory
+export default TransactionHistory;
