@@ -45,12 +45,6 @@ export default tokenSlice.reducer;
 const token = (state) => get(state, "token.contract");
 export const tokenSelector = createSelector(token, (t) => t);
 
-// const tokenContractLoaded = (state) => get(state, 'token.loaded', false)
-// export const tokenLoadedSelector = createSelector(
-//   tokenContractLoaded,
-//   (tl) => tl,
-// )
-
 const tokenName = (state) => get(state, "token.name");
 export const tokenNameSelector = createSelector(tokenName, (n) => n);
 

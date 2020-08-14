@@ -53,16 +53,13 @@ class App extends Component {
       <div>
         <NavBarList />
         <Content />
-        {/* {this.props.tokenLoaded ? <Content /> : <div className="content"></div>} */}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return {
-    // tokenLoaded: tokenLoadedSelector(state),
-  };
+  return {};
 }
 
 export default connect(mapStateToProps)(App);

@@ -51,8 +51,12 @@ class TransactionHistory extends Component {
   }
 }
 
-TransactionHistory.defaultProps = {};
+TransactionHistory.defaultProps = {
+  transactions: [],
+};
 
-TransactionHistory.propTypes = {};
+TransactionHistory.propTypes = {
+  transactions: PropTypes.array.isRequired,
+};
 
 export default TransactionHistory;

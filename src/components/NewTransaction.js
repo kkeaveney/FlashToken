@@ -1,12 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { transferTokens } from '../interactions'
-import { tokenAmountChanged } from '../actions/tokenSlice'
-import { recipientAccountLoaded } from '../actions/accountSlice'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { transferTokens } from "../interactions";
+import { tokenAmountChanged } from "../actions/tokenSlice";
+import { recipientAccountLoaded } from "../actions/accountSlice";
 
 const handleSubmit = async (account, token, tokenAmount, recipient) => {
-  await transferTokens(token, account, recipient, tokenAmount)
-}
+  document.getElementById("address").value = "";
+  document.getElementById("amount").value = "";
+  await transferTokens(token, account, recipient, tokenAmount);
+};
 
 const NewTransaction = ({
   account,
@@ -32,17 +34,13 @@ const NewTransaction = ({
               </tr>
             </tbody>
           </table>
-          <form
-            className="row"
-            // onSubmit={(event) => {
-            //   event.preventDefault()
-            //   // handleSubmit(account, token, tokenAmount)
-            // }}
-          >
+          <form className="row">
             <div className="col-0 col-sm m-1">
               <input
                 type="text"
-                placeholder="Recipient address"
+                autoComplete="off"
+                id="address"
+                placeholder="Recipient Address"
                 onChange={(e) =>
                   dispatch(recipientAccountLoaded(e.target.value))
                 }
@@ -55,13 +53,15 @@ const NewTransaction = ({
           <form
             className="row"
             onSubmit={(event) => {
-              event.preventDefault()
-              handleSubmit(account, token, tokenAmount, recipient)
+              event.preventDefault();
+              handleSubmit(account, token, tokenAmount, recipient);
             }}
           >
             <div className="col-0 col-sm m-1">
               <input
                 type="text"
+                id="amount"
+                autoComplete="off"
                 placeholder="FLX Amount"
                 onChange={(e) => dispatch(tokenAmountChanged(e.target.value))}
                 className="form-control form-control-sm bg-dark text-white"
@@ -72,6 +72,7 @@ const NewTransaction = ({
               <button
                 type="submit"
                 className="btn btn-secondary btn-block btn-sm"
+                //onClick={() => resetTextInput()}
               >
                 Transfer
               </button>
@@ -81,17 +82,17 @@ const NewTransaction = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 NewTransaction.defaultProps = {
   token: {},
-  tokenAmount: '0',
-}
+  tokenAmount: "0",
+};
 
 NewTransaction.propTypes = {
   token: PropTypes.object.isRequired,
   tokenAmount: PropTypes.string.isRequired,
-}
+};
 
-export default NewTransaction
+export default NewTransaction;

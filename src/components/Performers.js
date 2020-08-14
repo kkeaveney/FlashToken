@@ -10,6 +10,7 @@ const Performers = ({ transactions }) => {
       amount: _.sumBy(objs, (item) => Number(item.amount)),
     }))
     .value();
+  performers = _.orderBy(performers, ["amount"], ["asc"]).reverse();
 
   return (
     <div className="vertical">
