@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import _, { times } from "lodash";
+import _ from "lodash";
 import Token from "./abis/Token.json";
 import {
   web3Loaded,
@@ -14,7 +14,6 @@ import {
 } from "./actions/tokenSlice";
 import { accountTokenBalanceLoaded } from "./actions/accountSlice";
 import { getAccount } from "./helpers";
-import { relativeTimeRounding } from "moment";
 
 ////// Web3 Interactions /////////
 

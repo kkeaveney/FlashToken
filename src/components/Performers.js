@@ -10,8 +10,6 @@ const Performers = ({ accounts }) => {
   performers = _.uniqBy(performers, "recipent");
   performers = _.orderBy(performers, ["balance"], ["asc"]).reverse();
 
-  console.log(performers);
-
   return (
     <div className="vertical">
       <div className="card bg-dark text-white">
