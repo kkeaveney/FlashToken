@@ -2,15 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-const Performers = ({ transactions }) => {
-  var performers = _(transactions)
-    .groupBy("recipent")
-    .map((objs, key) => ({
-      recipent: key,
-      amount: _.sumBy(objs, (item) => Number(item.amount)),
-    }))
-    .value();
-  performers = _.orderBy(performers, ["amount"], ["asc"]).reverse();
+const Performers = ({ accounts }) => {
+  var performers = _.map(accounts, (o) =>
+    _.pick(o, ["id", "recipent", "balance"])
+  );
+
+  performers = _.uniqBy(performers, "recipent");
+  performers = _.orderBy(performers, ["balance"], ["asc"]).reverse();
+
+  console.log(performers);
 
   return (
     <div className="vertical">
@@ -35,7 +35,7 @@ const Performers = ({ transactions }) => {
                     key={performer.recipent}
                   >
                     <td className="text-muted">{accountReduced}</td>
-                    <td>{performer.amount}</td>
+                    <td>{performer.balance}</td>
                   </tr>
                 );
               })}

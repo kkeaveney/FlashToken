@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { get } from "lodash";
+import _ from "lodash";
 
 export const tokenSlice = createSlice({
   name: "token",
@@ -9,6 +10,8 @@ export const tokenSlice = createSlice({
     transactionsLoaded: false,
     transactions: [],
     tokenAmount: "",
+    ownerAccounts: [],
+    tokenBalance: [],
   },
   reducers: {
     tokenLoaded: (state, action) => {
@@ -28,6 +31,10 @@ export const tokenSlice = createSlice({
     tokenAmountChanged: (state, action) => {
       state.tokenAmount = action.payload;
     },
+    tokenOwnerAccountsLoaded: (state, action) => {
+      state.ownerAccounts = action.payload;
+      //console.log("action", action.payload);
+    },
   },
 });
 export const {
@@ -36,6 +43,7 @@ export const {
   transactionsLoaded,
   transactionComplete,
   tokenAmountChanged,
+  tokenOwnerAccountsLoaded,
 } = tokenSlice.actions;
 
 export default tokenSlice.reducer;
@@ -52,7 +60,16 @@ const tokenbalance = (state) => get(state, "token.balance");
 export const tokenBalanceSelector = createSelector(tokenbalance, (t) => t);
 
 const transactions = (state) => get(state, "token.transactions");
-export const transactionsSelector = createSelector(transactions, (t) => t);
+export const transactionsSelector = createSelector(transactions, (t) => {
+  //var transactionValues = _.map(t, _.partialRight(_.pick, ["returnValues"]));
+  return t;
+});
 
 const tokenAmount = (state) => get(state, "token.tokenAmount");
 export const tokenAmountSelector = createSelector(tokenAmount, (t) => t);
+
+const tokenAccounts = (state) => get(state, "token.ownerAccounts");
+export const tokenAccountSelector = createSelector(tokenAccounts, (t) => {
+  // t = _.uniqBy(t, "recipent");
+  return t;
+});

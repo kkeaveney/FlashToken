@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import _, { times } from "lodash";
 import Token from "./abis/Token.json";
 import {
   web3Loaded,
@@ -9,10 +10,11 @@ import {
   tokenLoaded,
   tokenNameLoaded,
   transactionsLoaded,
-  transactionComplete,
+  tokenOwnerAccountsLoaded,
 } from "./actions/tokenSlice";
 import { accountTokenBalanceLoaded } from "./actions/accountSlice";
 import { getAccount } from "./helpers";
+import { relativeTimeRounding } from "moment";
 
 ////// Web3 Interactions /////////
 
@@ -88,20 +90,50 @@ export const loadAllTransactions = async (token, dispatch) => {
     toBlock: "latest",
   });
 
-  const transactions = transactionStream.map((event) => event.returnValues);
+  const transactions = transactionStream.map((event) => event);
   dispatch(transactionsLoaded(transactions));
 };
 
+export const loadAllAccounts = async (token, dispatch) => {
+  const transactionStream = await token.getPastEvents("Transfer", {
+    fromBlock: 0,
+    toBlock: "latest",
+  });
+  const transactions = transactionStream.map((event) => event);
+  const returnValues = _.map(transactions, "returnValues");
+
+  const functionWithPromise = (item) => {
+    //a function that returns a promise
+
+    return Promise.resolve(item);
+  };
+
+  const anAsyncFunction = async (item) => {
+    return functionWithPromise(
+      (item.balance = await token.methods.balanceOf(item.recipent).call())
+    );
+  };
+
+  const getData = async () => {
+    return Promise.all(returnValues.map((item) => anAsyncFunction(item)));
+  };
+
+  getData().then((data) => {
+    dispatch(tokenOwnerAccountsLoaded(returnValues));
+  });
+};
+
 export const subscribeToEvents = async (token, dispatch, web3, address) => {
-  console.log("event");
   if (token) {
     token.events.Transfer({}, (error, event) => {
       if (error) {
         console.log(error);
       } else {
-        dispatch(transactionComplete(event.returnValues));
+        //activeAccounts(event, dispatch, token);
+        loadAllTransactions(token, dispatch);
         loadAccountTokenBalance(address, token, dispatch);
         loadAccountBalance(web3, dispatch);
+        loadAllAccounts(token, dispatch);
       }
     });
   }

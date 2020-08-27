@@ -13,6 +13,7 @@ import {
   loadAccountTokenBalance,
   loadAllTransactions,
   subscribeToEvents,
+  loadAllAccounts,
 } from "../interactions";
 
 class App extends Component {
@@ -46,6 +47,8 @@ class App extends Component {
     setTimeout(async function() {
       await subscribeToEvents(token, dispatch, web3, account);
     }, 2000);
+
+    await loadAllAccounts(token, dispatch);
   }
 
   render() {

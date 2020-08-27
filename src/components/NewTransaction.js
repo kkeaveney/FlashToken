@@ -72,7 +72,6 @@ const NewTransaction = ({
               <button
                 type="submit"
                 className="btn btn-secondary btn-block btn-sm"
-                //onClick={() => resetTextInput()}
               >
                 Transfer
               </button>

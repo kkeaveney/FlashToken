@@ -1,9 +1,9 @@
-import Performers from '../components/Performers'
-import { connect } from 'react-redux'
-import { transactionsSelector } from '../actions/tokenSlice'
+import Performers from "../components/Performers";
+import { connect } from "react-redux";
+import { tokenAccountSelector } from "../actions/tokenSlice";
 
 const mapStateToProps = (state) => ({
-  transactions: transactionsSelector(state),
-})
+  accounts: tokenAccountSelector(state),
+});
 
-export default connect(mapStateToProps)(Performers)
+export default connect(mapStateToProps)(Performers);
