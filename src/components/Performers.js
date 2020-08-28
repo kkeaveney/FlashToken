@@ -8,7 +8,11 @@ const Performers = ({ accounts }) => {
   );
 
   performers = _.uniqBy(performers, "recipent");
-  performers = _.orderBy(performers, ["balance"], ["asc"]).reverse();
+  performers = _.sortBy(performers, ["balance"]).reverse();
+
+  const balances = _.pick(performers, ["balance"]);
+
+  console.log(performers);
 
   return (
     <div className="vertical">

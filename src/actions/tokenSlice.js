@@ -33,7 +33,6 @@ export const tokenSlice = createSlice({
     },
     tokenOwnerAccountsLoaded: (state, action) => {
       state.ownerAccounts = action.payload;
-      //console.log("action", action.payload);
     },
   },
 });

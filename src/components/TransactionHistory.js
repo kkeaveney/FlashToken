@@ -5,11 +5,6 @@ import _ from "lodash";
 import { recipientAccountSelector } from "../actions/accountSlice";
 
 export const showTransactions = (transactions) => {
-  // var transactionValues = _.map(
-  //   transactions,
-  //   _.partialRight(_.pick, ["transactionHash", "returnValues"])
-  // );
-
   return (
     <tbody>
       {transactions
@@ -53,8 +48,7 @@ class TransactionHistory extends Component {
                   <th></th>
                   <th>From</th>
                   <th>To</th>
-                  {/* <th>Tx</th> */}
-                  <th>FLX</th>
+                  <th>Tx</th>
                 </tr>
               </thead>
               {showTransactions(this.props.transactions)}

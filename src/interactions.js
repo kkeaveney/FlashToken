@@ -103,12 +103,13 @@ export const loadAllAccounts = async (token, dispatch) => {
 
   const functionWithPromise = (item) => {
     //a function that returns a promise
-
+    item["balance"] = parseInt(item["balance"], 10);
     return Promise.resolve(item);
   };
 
   const anAsyncFunction = async (item) => {
     return functionWithPromise(
+      item,
       (item.balance = await token.methods.balanceOf(item.recipent).call())
     );
   };
@@ -118,7 +119,7 @@ export const loadAllAccounts = async (token, dispatch) => {
   };
 
   getData().then((data) => {
-    dispatch(tokenOwnerAccountsLoaded(returnValues));
+    dispatch(tokenOwnerAccountsLoaded(data));
   });
 };
 
