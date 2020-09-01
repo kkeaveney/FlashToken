@@ -10,10 +10,6 @@ const Performers = ({ accounts }) => {
   performers = _.uniqBy(performers, "recipent");
   performers = _.sortBy(performers, ["balance"]).reverse();
 
-  const balances = _.pick(performers, ["balance"]);
-
-  console.log(performers);
-
   return (
     <div className="vertical">
       <div className="card bg-dark text-white">

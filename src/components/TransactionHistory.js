@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Component } from "react";
 import _ from "lodash";
-import { recipientAccountSelector } from "../actions/accountSlice";
 
 export const showTransactions = (transactions) => {
   return (
@@ -16,19 +15,30 @@ export const showTransactions = (transactions) => {
           const recipent = transaction.returnValues.recipent;
           const recipentReduced = recipent.substr(0, 24) + "...";
           const transactionHash = transaction.transactionHash;
+          const transactionHashReduced = transactionHash.substr(0, 42) + "...";
           return (
-            <tr
-              className={`order-${transaction.returnValues.id}`}
-              key={transaction.returnValues.id}
-            >
-              <td className="text-muted">{transaction.returnValues.id}</td>
-              <td>{senderReduced}</td>
-              <td>{recipentReduced}</td>
-              <td>{transactionHash}</td>
-              <td className={`text-${transaction.returnValues.id}`}>
-                {transaction.returnValues.amount}
-              </td>
-            </tr>
+            <React.Fragment>
+              <tr key={transaction.returnValues.id}>
+                <td>{senderReduced}</td>
+                <td>{recipentReduced}</td>
+
+                <td className={`text-${transaction.returnValues.id}`}>
+                  {transaction.returnValues.amount}
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a
+                    className="transactionHash"
+                    href={`https://etherscan.io/tx/${transactionHash}`}
+                    //target=""
+                  >
+                    {transactionHashReduced}
+                  </a>
+                </td>
+              </tr>
+            </React.Fragment>
           );
         })}
     </tbody>
@@ -45,12 +55,13 @@ class TransactionHistory extends Component {
             <table className="table table-dark table-sm small">
               <thead>
                 <tr>
-                  <th></th>
+                  {/* <th></th> */}
                   <th>From</th>
                   <th>To</th>
-                  <th>Tx</th>
+                  <th>FLX</th>
                 </tr>
               </thead>
+
               {showTransactions(this.props.transactions)}
             </table>
           </div>

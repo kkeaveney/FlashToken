@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
 const NavBar = ({ account, balance, web3 }) => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,16 +23,16 @@ const NavBar = ({ account, balance, web3 }) => (
       </li>
     </ul>
   </nav>
-)
+);
 
 NavBar.defaultProps = {
-  account: '',
+  account: "",
   web3: {},
-}
+};
 
 NavBar.propTypes = {
   account: PropTypes.string.isRequired,
   web3: PropTypes.object.isRequired,
-}
+};
 
-export default NavBar
+export default NavBar;
