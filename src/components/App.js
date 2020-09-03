@@ -58,7 +58,7 @@ class App extends Component {
     return (
       <div>
         <NavBarList />
-        {/* {this.props.tokenLoaded ? <Content /> : <div className="content"></div>} */}
+
         <Content />
       </div>
     )
