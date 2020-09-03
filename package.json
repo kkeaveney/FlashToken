@@ -52,7 +52,7 @@
       "not op_mini all"
     ],
     "engines": {
-      "node": "5.1.0"
+      "node": "10.15.3"
     },
     "development": [
       "last 1 chrome version",
