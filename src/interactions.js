@@ -44,7 +44,8 @@ export const loadAccount = async (web3, dispatch) => {
 };
 
 export const loadAccountBalance = async (web3, dispatch) => {
-  const account = await getAccount();
+  const accounts = await web3.eth.getAccounts();
+  const account = await accounts[0];
   const balanceAsWei = await web3.eth.getBalance(account);
   const balance = web3.utils.fromWei(balanceAsWei, "ether");
   dispatch(balanceLoaded(balance));
