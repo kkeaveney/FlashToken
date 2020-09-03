@@ -17,8 +17,8 @@ export const showTransactions = (transactions) => {
           const transactionHash = transaction.transactionHash;
           const transactionHashReduced = transactionHash.substr(0, 42) + "...";
           return (
-            <React.Fragment>
-              <tr key={transaction.returnValues.id}>
+            <React.Fragment key={transaction.returnValues.id}>
+              <tr>
                 <td>{senderReduced}</td>
                 <td>{recipentReduced}</td>
 
@@ -31,7 +31,7 @@ export const showTransactions = (transactions) => {
                 <td>
                   <a
                     className="transactionHash"
-                    href={`https://etherscan.io/tx/${transactionHash}`}
+                    href={`https://kovan.etherscan.io/tx/${transactionHash}`}
                     //target=""
                   >
                     {transactionHashReduced}
@@ -55,7 +55,6 @@ class TransactionHistory extends Component {
             <table className="table table-dark table-sm small">
               <thead>
                 <tr>
-                  {/* <th></th> */}
                   <th>From</th>
                   <th>To</th>
                   <th>FLX</th>
