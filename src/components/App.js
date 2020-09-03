@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import './App.css'
-import NavBarList from '../containers/NavBarList'
-import Content from './Content'
-import { tokenLoadedSelector } from '../actions/tokenSlice'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import "./App.css";
+import NavBarList from "../containers/NavBarList";
+import Content from "./Content";
+import { tokenLoadedSelector } from "../actions/tokenSlice";
 
 import {
   loadWeb3,
@@ -15,39 +15,38 @@ import {
   loadAllTransactions,
   subscribeToEvents,
   loadAllAccounts,
-} from '../interactions'
+} from "../interactions";
 
 class App extends Component {
   componentWillMount() {
-    console.log('Mount!')
-    this.loadBlockchainData(this.props.dispatch)
+    this.loadBlockchainData(this.props.dispatch);
   }
 
   async loadBlockchainData(dispatch) {
-    const web3 = loadWeb3(dispatch)
-    const networkId = await web3.eth.net.getId()
-    const account = await loadAccount(web3, dispatch)
-    await loadAccountBalance(web3, dispatch)
+    const web3 = loadWeb3(dispatch);
+    const networkId = await web3.eth.net.getId();
+    const account = await loadAccount(web3, dispatch);
+    await loadAccountBalance(web3, dispatch);
 
-    const token = await loadToken(web3, networkId, dispatch)
+    const token = await loadToken(web3, networkId, dispatch);
 
     if (!token) {
-      window.alert('Token smart contract not detected on the current network')
-      return
+      window.alert("Token smart contract not detected on the current network");
+      return;
     }
 
-    await loadTokenName(token, dispatch)
-    await loadAccountTokenBalance(account, token, dispatch)
-    await loadAllTransactions(token, dispatch)
+    await loadTokenName(token, dispatch);
+    await loadAccountTokenBalance(account, token, dispatch);
+    await loadAllTransactions(token, dispatch);
 
-    window.ethereum.on('accountsChanged', async function (accounts) {
-      await loadAccount(dispatch)
-      await loadAccountBalance(web3, dispatch)
-      await loadAccountTokenBalance(accounts[0], token, dispatch)
-    })
+    window.ethereum.on("accountsChanged", async function(accounts) {
+      await loadAccount(dispatch);
+      await loadAccountBalance(web3, dispatch);
+      await loadAccountTokenBalance(accounts[0], token, dispatch);
+    });
 
-    await loadAllAccounts(token, dispatch)
-    await subscribeToEvents(token, dispatch, web3, account)
+    await loadAllAccounts(token, dispatch);
+    await subscribeToEvents(token, dispatch, web3, account);
 
     // setTimeout(async function() {
     //   await subscribeToEvents(token, dispatch, web3, account);
@@ -61,12 +60,12 @@ class App extends Component {
 
         <Content />
       </div>
-    )
+    );
   }
 }
 
 function mapStateToProps(state) {
-  return { tokenLoaded: tokenLoadedSelector(state) }
+  return { tokenLoaded: tokenLoadedSelector(state) };
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(App);
