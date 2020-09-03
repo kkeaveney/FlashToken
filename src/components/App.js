@@ -40,7 +40,7 @@ class App extends Component {
     await loadAllTransactions(token, dispatch);
 
     window.ethereum.on("accountsChanged", async function(accounts) {
-      await loadAccount(dispatch);
+      await loadAccount(web3, dispatch);
       await loadAccountBalance(web3, dispatch);
       await loadAccountTokenBalance(accounts[0], token, dispatch);
     });
