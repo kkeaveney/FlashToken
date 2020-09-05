@@ -13,7 +13,6 @@ import {
   tokenOwnerAccountsLoaded,
 } from "./actions/tokenSlice";
 import { accountTokenBalanceLoaded } from "./actions/accountSlice";
-import { getAccount } from "./helpers";
 
 ////// Web3 Interactions /////////
 
@@ -89,7 +88,10 @@ export const transferTokens = async (
       })
       .on("confirmation", (confirmationNumber, receipt) => {
         if (confirmationNumber.toString() === "3") {
-          window.location.reload();
+          //window.location.reload();
+          //await loadAccount(web3, dispatch);
+          //await loadAccountBalance(web3, dispatch);
+          //await loadAccountTokenBalance(accounts[0], token, dispatch);
         }
       });
   } catch (err) {
